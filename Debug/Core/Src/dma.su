@@ -1,0 +1,3 @@
+dma.c:14:6:dma_start	16	static
+dma.c:21:6:dma_tick	16	static
+dma.c:38:6:dma_transferring	4	static

@@ -1,0 +1,5 @@
+timer.c:6:16:timer_get_context	4	static
+timer.c:10:6:timer_init	4	static
+timer.c:14:6:timer_tick	16	static
+timer.c:47:6:timer_write	16	static
+timer.c:71:4:timer_read	16	static

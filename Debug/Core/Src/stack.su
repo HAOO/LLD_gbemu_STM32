@@ -1,0 +1,4 @@
+stack.c:87:6:stack_push	16	static
+stack.c:92:6:stack_push16	16	static
+stack.c:97:4:stack_pop	8	static
+stack.c:101:5:stack_pop16	16	static

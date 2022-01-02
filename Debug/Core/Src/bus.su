@@ -1,0 +1,4 @@
+bus.c:23:4:bus_read	16	static
+bus.c:61:6:bus_write	16	static
+bus.c:97:5:bus_read16	24	static
+bus.c:104:6:bus_write16	16	static

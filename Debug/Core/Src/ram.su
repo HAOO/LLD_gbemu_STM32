@@ -1,0 +1,4 @@
+ram.c:10:4:wram_read	16	static
+ram.c:21:6:wram_write	16	static
+ram.c:27:4:hram_read	16	static
+ram.c:33:6:hram_write	16	static

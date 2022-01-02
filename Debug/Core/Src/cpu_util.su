@@ -1,0 +1,8 @@
+cpu_util.c:6:5:reverse	16	static
+cpu_util.c:10:5:cpu_read_reg	16	static
+cpu_util.c:32:6:cpu_set_reg	24	static
+cpu_util.c:60:4:cpu_read_reg8	16	static
+cpu_util.c:79:6:cpu_set_reg8	16	static
+cpu_util.c:96:16:cpu_get_regs	4	static
+cpu_util.c:100:4:cpu_get_int_flags	4	static
+cpu_util.c:104:6:cpu_set_int_flags	16	static

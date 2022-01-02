@@ -1,0 +1,4 @@
+emu.c:28:14:emu_get_context	4	static
+emu.c:32:7:cpu_run	16	static
+emu.c:56:5:emu_run	24	static
+emu.c:92:6:emu_cycles	32	static

@@ -1,0 +1,2 @@
+dbg.c:7:6:dbg_update	16	static
+dbg.c:17:6:dbg_print	4	static

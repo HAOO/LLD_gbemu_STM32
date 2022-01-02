@@ -1,0 +1,2 @@
+io.c:10:4:io_read	16	static
+io.c:44:6:io_write	16	static

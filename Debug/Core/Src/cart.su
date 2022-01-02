@@ -1,0 +1,11 @@
+cart.c:35:6:cart_need_save	4	static
+cart.c:39:6:cart_mbc1	4	static
+cart.c:43:6:cart_battery	4	static
+cart.c:150:13:cart_lic_name	4	static
+cart.c:158:13:cart_type_name	4	static
+cart.c:166:6:cart_setup_banking	16	static
+cart.c:183:6:cart_load	32	static
+cart.c:247:6:cart_battery_load	1064	static
+cart.c:265:6:cart_battery_save	1064	static
+cart.c:283:4:cart_read	16	static
+cart.c:303:6:cart_write	16	static

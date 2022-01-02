@@ -1,0 +1,7 @@
+ppu.c:11:14:ppu_get_context	4	static
+ppu.c:15:6:ppu_init	8	static
+ppu.c:38:6:ppu_tick	8	static
+ppu.c:58:6:ppu_oam_write	24	static
+ppu.c:67:4:ppu_oam_read	24	static
+ppu.c:76:6:ppu_vram_write	16	static
+ppu.c:80:4:ppu_vram_read	16	static

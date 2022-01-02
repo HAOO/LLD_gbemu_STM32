@@ -1,0 +1,5 @@
+gamepad.c:12:6:gamepad_button_sel	4	static
+gamepad.c:16:6:gamepad_dir_sel	4	static
+gamepad.c:20:6:gamepad_set_sel	16	static
+gamepad.c:25:16:gamepad_get_state	4	static
+gamepad.c:29:4:gamepad_get_output	16	static

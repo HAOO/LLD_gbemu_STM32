@@ -1,0 +1,5 @@
+lcd.c:10:6:lcd_init	16	static
+lcd.c:29:14:lcd_get_context	4	static
+lcd.c:33:4:lcd_read	24	static
+lcd.c:40:6:update_palette	24	static
+lcd.c:58:6:lcd_write	24	static
