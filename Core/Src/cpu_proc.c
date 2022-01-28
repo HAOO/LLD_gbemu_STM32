@@ -2,6 +2,7 @@
 #include <emu.h>
 #include <bus.h>
 #include <stack.h>
+#include "main.h"
 
 //processes CPU instructions...
 
@@ -25,7 +26,7 @@ void cpu_set_flags(cpu_context *ctx, int8_t z, int8_t n, int8_t h, int8_t c) {
 
 static void proc_none(cpu_context *ctx) {
     printf("INVALID INSTRUCTION!\n");
-    exit(-7);
+    Error_Handler();
 }
 
 static void proc_nop(cpu_context *ctx) {

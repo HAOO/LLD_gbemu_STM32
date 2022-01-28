@@ -1,6 +1,6 @@
-ppu_sm.c:12:6:increment_ly	16	static
-ppu_sm.c:31:6:load_line_sprites	48	static
-ppu_sm.c:92:6:ppu_mode_oam	8	static
-ppu_sm.c:112:6:ppu_mode_xfer	8	static
-ppu_sm.c:126:6:ppu_mode_vblank	8	static
-ppu_sm.c:145:6:ppu_mode_hblank	24	static
+ppu_sm.c:14:6:increment_ly	16	static
+ppu_sm.c:35:6:load_line_sprites	48	static
+ppu_sm.c:96:6:ppu_mode_oam	8	static
+ppu_sm.c:116:6:ppu_mode_xfer	8	static
+ppu_sm.c:130:6:ppu_mode_vblank	8	static
+ppu_sm.c:149:6:ppu_mode_hblank	24	static

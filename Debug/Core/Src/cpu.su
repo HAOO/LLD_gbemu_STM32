@@ -1,7 +1,7 @@
 cpu.c:13:6:cpu_init	8	static
 cpu.c:28:13:fetch_instruction	8	static
 cpu.c:35:13:execute	16	static
-cpu.c:45:6:cpu_step	120	static
+cpu.c:45:6:cpu_step	16	static
 cpu.c:102:4:cpu_get_ie_register	4	static
 cpu.c:106:6:cpu_set_ie_register	16	static
 cpu.c:110:6:cpu_request_interrupt	16	static

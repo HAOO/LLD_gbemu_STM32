@@ -3,6 +3,7 @@
 #include <bus.h>
 #include <ppu.h>
 #include <gamepad.h>
+#include "stm32f7xx_hal.h"
 
 //#include <SDL2/SDL.h>
 //#include <SDL2/SDL_ttf.h>
@@ -17,7 +18,7 @@
 //SDL_Texture *sdlDebugTexture;
 //SDL_Surface *debugScreen;
 
-//static int scale = 6;
+static int scale = 6;
 //static int sde = 0;
 
 void ui_init() {
@@ -65,60 +66,60 @@ void delay(u32 ms) {
 }
 
 u32 get_ticks() {
-    return 0;//SDL_GetTicks();
+    return HAL_GetTick();//SDL_GetTicks();
 }
 
 //static unsigned long ogbc_colors[4] = {0xFF9BBC0F, 0xFF8BAC0F, 0xFF306230, 0xFF0F380F};
 //static unsigned long tile_colors[4] = {0xFFFFFFFF, 0xFFAAAAAA, 0xFF555555, 0xFF000000};
 
-//void display_tile(SDL_Surface *surface, u16 startLocation, u16 tileNum, int x, int y) {
+void display_tile(u16 startLocation, u16 tileNum, int x, int y) {
     //SDL_Rect rc;
 
-//    for (int tileY=0; tileY<16; tileY += 2) {
-//        u8 b1 = bus_read(startLocation + (tileNum * 16) + tileY);
-//        u8 b2 = bus_read(startLocation + (tileNum * 16) + tileY + 1);
-//
-//        for (int bit=7; bit >= 0; bit--) {
-//            u8 hi = !!(b1 & (1 << bit)) << 1;
-//            u8 lo = !!(b2 & (1 << bit));
-//
-//            u8 color = hi | lo;
-//
+    for (int tileY=0; tileY<16; tileY += 2) {
+        u8 b1 = bus_read(startLocation + (tileNum * 16) + tileY);
+        u8 b2 = bus_read(startLocation + (tileNum * 16) + tileY + 1);
+
+        for (int bit=7; bit >= 0; bit--) {
+            u8 hi = !!(b1 & (1 << bit)) << 1;
+            u8 lo = !!(b2 & (1 << bit));
+
+            u8 color = hi | lo;
+
 //            rc.x = x + ((7 - bit) * scale);
 //            rc.y = y + (tileY / 2 * scale);
 //            rc.w = scale;
 //            rc.h = scale;
-//
+
 //            SDL_FillRect(surface, &rc, tile_colors[color]);
-//        }
-//    }
-//}
+        }
+    }
+}
 
 void update_dbg_window() {
-//    int xDraw = 0;
-//    int yDraw = 0;
-//    int tileNum = 0;
-//
+    int xDraw = 0;
+    int yDraw = 0;
+    int tileNum = 0;
+
 //    SDL_Rect rc;
 //    rc.x = 0;
 //    rc.y = 0;
 //    rc.w = debugScreen->w;
 //    rc.h = debugScreen->h;
 //    SDL_FillRect(debugScreen, &rc, 0xFF111111);
-//
-//    u16 addr = 0x8000;
-//
-//    //384 tiles, 24 x 16
-//    for (int y=0; y<24; y++) {
-//        for (int x=0; x<16; x++) {
-//            display_tile(debugScreen, addr, tileNum, xDraw + (x * scale), yDraw + (y * scale));
-//            xDraw += (8 * scale);
-//            tileNum++;
-//        }
-//
-//        yDraw += (8 * scale);
-//        xDraw = 0;
-//    }
+
+    u16 addr = 0x8000;
+
+    //384 tiles, 24 x 16
+    for (int y=0; y<24; y++) {
+        for (int x=0; x<16; x++) {
+            display_tile(addr, tileNum, xDraw + (x * scale), yDraw + (y * scale));
+            xDraw += (8 * scale);
+            tileNum++;
+        }
+
+        yDraw += (8 * scale);
+        xDraw = 0;
+    }
 //
 //	SDL_UpdateTexture(sdlDebugTexture, NULL, debugScreen->pixels, debugScreen->pitch);
 //	SDL_RenderClear(sdlDebugRenderer);
@@ -131,24 +132,24 @@ void ui_update() {
 //    rc.x = rc.y = 0;
 //    rc.w = rc.h = 2048;
 //
-//    u32 *video_buffer = ppu_get_context()->video_buffer;
-//
-//    for (int line_num = 0; line_num < YRES; line_num++) {
-//        for (int x = 0; x < XRES; x++) {
+    u32 *video_buffer = ppu_get_context()->video_buffer;
+
+    for (int line_num = 0; line_num < YRES; line_num++) {
+        for (int x = 0; x < XRES; x++) {
 //            rc.x = x * (scale + sde);
 //            rc.y = line_num * (scale + sde);
 //            rc.w = scale;
 //            rc.h = scale;
-//
+
 //            SDL_FillRect(screen, &rc, video_buffer[x + (line_num * XRES)]);
-//        }
-//    }
-//
+        }
+    }
+
 //    SDL_UpdateTexture(sdlTexture, NULL, screen->pixels, screen->pitch);
 //    SDL_RenderClear(sdlRenderer);
 //    SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
 //    SDL_RenderPresent(sdlRenderer);
-//
+
 //    update_dbg_window();
 }
 

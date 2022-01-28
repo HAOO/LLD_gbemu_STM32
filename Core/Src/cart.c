@@ -189,7 +189,7 @@ bool cart_load(char *cart) {
   }
 
   //Open file for writing (Create)
-  if(f_open(&SDFile, "Tetris.gb", FA_READ) != FR_OK)
+  if(f_open(&SDFile, "special.gb", FA_READ) != FR_OK)
   {
       printf("Failed to open: %s\n", cart);
       Error_Handler();
@@ -220,13 +220,13 @@ bool cart_load(char *cart) {
   ctx.battery = cart_battery();
   ctx.need_save = false;
 
-  printf("Cartridge Loaded:\n");
-  printf("\t Title    : %s\n", ctx.header->title);
-  printf("\t Type     : %2.2X (%s)\n", ctx.header->type, cart_type_name());
-  printf("\t ROM Size : %d KB\n", 32 << ctx.header->rom_size);
-  printf("\t RAM Size : %2.2X\n", ctx.header->ram_size);
-  printf("\t LIC Code : %2.2X (%s)\n", ctx.header->lic_code, cart_lic_name());
-  printf("\t ROM Vers : %2.2X\n", ctx.header->version);
+  printf("Cartridge Loaded:\r\n");
+  printf("\t Title    : %s\r\n", ctx.header->title);
+  printf("\t Type     : %2.2X (%s)\r\n", ctx.header->type, cart_type_name());
+  printf("\t ROM Size : %d KB\r\n", 32 << ctx.header->rom_size);
+  printf("\t RAM Size : %2.2X\r\n", ctx.header->ram_size);
+  printf("\t LIC Code : %2.2X (%s)\r\n", ctx.header->lic_code, cart_lic_name());
+  printf("\t ROM Vers : %2.2X\r\n", ctx.header->version);
 
   cart_setup_banking();
 
@@ -235,7 +235,7 @@ bool cart_load(char *cart) {
       x = x - ctx.rom_data[i] - 1;
   }
 
-  printf("\t Checksum : %2.2X (%s)\n", ctx.header->checksum, (x & 0xFF) ? "PASSED" : "FAILED");
+  printf("\t Checksum : %2.2X (%s)\r\n", ctx.header->checksum, (x & 0xFF) ? "PASSED" : "FAILED");
 
   if (ctx.battery) {
       cart_battery_load();

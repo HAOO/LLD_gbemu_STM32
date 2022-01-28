@@ -1,7 +1,8 @@
-ui.c:23:6:ui_init	4	static
-ui.c:63:6:delay	16	static
-ui.c:67:5:get_ticks	4	static
-ui.c:97:6:update_dbg_window	4	static
-ui.c:129:6:ui_update	4	static
-ui.c:155:6:ui_on_key	16	static
-ui.c:170:6:ui_handle_events	4	static
+ui.c:24:6:ui_init	4	static
+ui.c:64:6:delay	16	static
+ui.c:68:5:get_ticks	8	static
+ui.c:75:6:display_tile	40	static
+ui.c:98:6:update_dbg_window	40	static
+ui.c:130:6:ui_update	24	static
+ui.c:156:6:ui_on_key	16	static
+ui.c:171:6:ui_handle_events	4	static

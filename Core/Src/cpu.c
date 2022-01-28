@@ -8,7 +8,7 @@
 
 cpu_context ctx = {0};
 
-#define CPU_DEBUG 1
+#define CPU_DEBUG 0
 
 void cpu_init() {
     ctx.regs.pc = 0x100;
@@ -63,7 +63,7 @@ bool cpu_step() {
         char inst[16];
         inst_to_str(&ctx, inst);
 
-        printf("%04X: %-12s (%02X %02X %02X) A: %02X F: %s BC: %02X%02X DE: %02X%02X HL: %02X%02X\n",
+        printf("%04X: %-12s (%02X %02X %02X) A: %02X F: %s BC: %02X%02X DE: %02X%02X HL: %02X%02X\r\n",
             pc, inst, ctx.cur_opcode,
             bus_read(pc + 1), bus_read(pc + 2), ctx.regs.a, flags, ctx.regs.b, ctx.regs.c,
             ctx.regs.d, ctx.regs.e, ctx.regs.h, ctx.regs.l);

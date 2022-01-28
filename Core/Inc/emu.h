@@ -9,7 +9,9 @@ typedef struct {
     u64 ticks;
 } emu_context;
 
-int emu_run(char *argv) ;
+void cpu_run(void *p);
+
+void emu_run(char *argv) ;
 
 emu_context *emu_get_context();
 

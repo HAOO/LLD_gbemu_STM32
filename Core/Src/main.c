@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "fatfs.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -50,6 +51,9 @@ DMA_HandleTypeDef hdma_sdmmc2_tx;
 
 UART_HandleTypeDef huart1;
 
+osThreadId defaultTaskHandle;
+osThreadId cpu_taskHandle;
+osThreadId ui_taskHandle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -61,6 +65,10 @@ static void MX_SDMMC2_SD_Init(void);
 static void MX_DMA_Init(void);
 static void MX_CRC_Init(void);
 static void MX_USART1_UART_Init(void);
+void StartDefaultTask(void const * argument);
+void cpu_start(void const * argument);
+void ui_start(void const * argument);
+
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -69,7 +77,6 @@ static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN 0 */
 int _write(int file, char *ptr, int len)
 {
-
   HAL_UART_Transmit(&huart1, (uint8_t*)ptr, len, HAL_MAX_DELAY);
   return len;
 }
@@ -82,10 +89,7 @@ int _write(int file, char *ptr, int len)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-//  FRESULT res; /* FatFs function common result code */
-//  uint32_t bytesread; /* File write/read counts */
-//  uint8_t rtext[32768u];/* File read buffer */
-//  uint32_t fsize;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -113,34 +117,42 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  emu_run("Tetris.gb");
-//
-//  if(f_mount(&SDFatFS, (TCHAR const*)SDPath, 0) != FR_OK)
-//  {
-//      Error_Handler();
-//  }
-//
-//  //Open file for writing (Create)
-//  if(f_open(&SDFile, "Tetris.gb", FA_READ) != FR_OK)
-//  {
-//      Error_Handler();
-//  }
-//  fsize = f_size(&SDFile);
-//
-//  res = f_read(&SDFile, (void *)&rtext, fsize, (void *)&bytesread);
-//  if(res != FR_OK)
-//  {
-//	  Error_Handler();
-//  }
-//  else
-//  {
-//
-//	  f_close(&SDFile);
-//  }
-//
-//  f_mount(&SDFatFS, (TCHAR const*)NULL, 0);
   /* USER CODE END 2 */
 
+  /* USER CODE BEGIN RTOS_MUTEX */
+  /* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+  /* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+  /* add queues, ... */
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+
+  /* definition and creation of cpu_task */
+  osThreadDef(cpu_task, cpu_start, osPriorityBelowNormal, 0, 512);
+  cpu_taskHandle = osThreadCreate(osThread(cpu_task), NULL);
+
+  /* definition and creation of ui_task */
+  osThreadDef(ui_task, ui_start, osPriorityNormal, 0, 512);
+  ui_taskHandle = osThreadCreate(osThread(ui_task), NULL);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+  /* add threads, ... */
+  /* USER CODE END RTOS_THREADS */
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -304,10 +316,10 @@ static void MX_DMA_Init(void)
 
   /* DMA interrupt init */
   /* DMA2_Stream0_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
   /* DMA2_Stream5_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Stream5_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(DMA2_Stream5_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream5_IRQn);
 
 }
@@ -761,6 +773,81 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+/* USER CODE BEGIN Header_StartDefaultTask */
+/**
+  * @brief  Function implementing the defaultTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_StartDefaultTask */
+void StartDefaultTask(void const * argument)
+{
+  /* USER CODE BEGIN 5 */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(10000);
+  }
+  /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_cpu_start */
+/**
+* @brief Function implementing the cpu_task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_cpu_start */
+void cpu_start(void const * argument)
+{
+  /* USER CODE BEGIN cpu_start */
+  /* Infinite loop */
+  for(;;)
+  {
+    cpu_run(NULL);
+  }
+  /* USER CODE END cpu_start */
+}
+
+/* USER CODE BEGIN Header_ui_start */
+/**
+* @brief Function implementing the ui_task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_ui_start */
+void ui_start(void const * argument)
+{
+  /* USER CODE BEGIN ui_start */
+  /* Infinite loop */
+  for(;;)
+  {
+    emu_run("special.gb");
+  }
+  /* USER CODE END ui_start */
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.

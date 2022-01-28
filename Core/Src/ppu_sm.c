@@ -4,10 +4,12 @@
 #include <interrupts.h>
 #include <string.h>
 #include <cart.h>
+#include "cmsis_os.h"
 
 void pipeline_fifo_reset();
 void pipeline_process();
 bool window_visible();
+volatile uint8_t temp = 0;
 
 void increment_ly() {
     if (window_visible() && lcd_get_context()->ly >= lcd_get_context()->win_y &&
@@ -16,6 +18,8 @@ void increment_ly() {
     }
 
     lcd_get_context()->ly++;
+    temp = lcd_get_context()->ly++;
+
 
     if (lcd_get_context()->ly == lcd_get_context()->ly_compare) {
         LCDS_LYC_SET(1);
@@ -162,7 +166,7 @@ void ppu_mode_hblank() {
             u32 frame_time = end - prev_frame_time;
 
             if (frame_time < target_frame_time) {
-                delay((target_frame_time - frame_time));
+        	osDelay((target_frame_time - frame_time));
             }
 
             if (end - start_timer >= 1000) {
