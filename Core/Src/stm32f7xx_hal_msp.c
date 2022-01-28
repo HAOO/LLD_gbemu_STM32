@@ -142,8 +142,9 @@ void HAL_SD_MspInit(SD_HandleTypeDef* hsd)
   /* USER CODE END SDMMC2_MspInit 0 */
   /** Initializes the peripherals clock
   */
-    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SDMMC2;
-    PeriphClkInitStruct.Sdmmc2ClockSelection = RCC_SDMMC2CLKSOURCE_SYSCLK;
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SDMMC2|RCC_PERIPHCLK_CLK48;
+    PeriphClkInitStruct.Clk48ClockSelection = RCC_CLK48SOURCE_PLL;
+    PeriphClkInitStruct.Sdmmc2ClockSelection = RCC_SDMMC2CLKSOURCE_CLK48;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
     {
       Error_Handler();
